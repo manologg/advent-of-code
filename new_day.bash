@@ -15,4 +15,4 @@ mkdir ${new_folder}
 cp ../solve-template.py ${new_folder}/solve.py
 echo "" > ${new_folder}/input.txt
 gedit ${new_folder}/input.txt
-
+cd ${new_folder}
