@@ -8,8 +8,10 @@ def readline():
     return input_file.readline()[:-1]
 
 
-x = readline().split(',')
-for i in x:
-    pass
+line = readline()
+x = []
+while line:
+    x.append(line)
+    line = readline()
 
 print(x)
