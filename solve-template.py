@@ -8,6 +8,10 @@ def readline():
     return input_file.readline()[:-1]
 
 
+def readlines():
+    return [x[:-1] for x in input_file.readlines()]
+
+
 line = readline()
 x = []
 while line:
