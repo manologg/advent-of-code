@@ -30,13 +30,13 @@ def find_missing(what, numbers):
 
 line = readline()
 highest_seat_id = 0
-all_sits = []
+all_seats = []
 while line:
 
     row = decimal(translate(line[:7], 'F', 'B'))
     column = decimal(translate(line[7:], 'L', 'R'))
     seat_id = row * 8 + column
-    all_sits.append((row, column, seat_id))
+    all_seats.append((row, column, seat_id))
 
     if seat_id > highest_seat_id:
         highest_seat_id = seat_id
@@ -46,8 +46,8 @@ while line:
 
 print('Highest seat ID: {}'.format(highest_seat_id))
 
-rows = [x[0] for x in all_sits]
-columns = [x[1] for x in all_sits]
-seat_ids = [x[2] for x in all_sits]
+rows = [x[0] for x in all_seats]
+columns = [x[1] for x in all_seats]
+seat_ids = [x[2] for x in all_seats]
 
 print('missing seat ID: {}'.format(find_missing('seat IDs', seat_ids)))
