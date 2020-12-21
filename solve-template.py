@@ -3,10 +3,16 @@
 
 input_file = open('input.txt')
 
+
 ################################################################
 
 def readline():
     return input_file.readline()[:-1]
+
+
+def ignore_line():
+    line = readline()
+    print('ignoring line \'{}\'', line)
 
 
 line = readline()
