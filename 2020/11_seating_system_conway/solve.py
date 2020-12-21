@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # coding=utf-8
 from copy import copy, deepcopy
+from time import sleep
 
 input_file = open('input.txt')
 
