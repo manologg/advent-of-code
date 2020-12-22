@@ -15,11 +15,13 @@ def ignore_line():
     print('ignoring line \'{}\'', line)
 
 
-line = readline()
-x = []
-while line:
-    x.append(line)
+def readlines():
     line = readline()
+    x = []
+    while line:
+        x.append(line)
+        line = readline()
+    return x
 
 
 ################################################################
@@ -29,8 +31,18 @@ def readlines():
     return [int(x[:-1]) for x in input_file.readlines()]
 
 
-x = readlines()
-
 ################################################################
 
+
+def test(test_cases):
+    for line, expected in test_cases:
+        result, parsed = evaluate(line.replace(' ', ''))
+        if result == expected:
+            print('{} --> OK'.format(line))
+        else:
+            raise AssertionError('Expected: {}. Found: {}'.format(expected, result))
+    print('All tests passed!')
+
+
+x = readlines()
 print(x)
