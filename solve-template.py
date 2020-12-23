@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # coding=utf-8
+import re
 
 input_file = open('input.txt')
 
@@ -15,11 +16,16 @@ def ignore_line():
     print('ignoring line \'{}\'', line)
 
 
+def parse(line):
+    match = re.match(r'(?P<key>\w+): (?P<value>\w+)', line).groupdict()
+    return int(match['key']), int(match['value'])
+
+
 def readlines():
     line = readline()
     x = []
     while line:
-        x.append(line)
+        x.append(parse(line))
         line = readline()
     return x
 
@@ -27,7 +33,7 @@ def readlines():
 ################################################################
 
 
-def readlines():
+def read_int_lines():
     return [int(x[:-1]) for x in input_file.readlines()]
 
 
