@@ -21,13 +21,13 @@ def print_dict(d, title=''):
         print('{}: {}'.format(key, value))
 
 
-def readline():
+def read_line():
     return input_file.readline()[:-1]
 
 
 def ignore_line():
-    line = readline()
-    print('ignoring line \'{}\'', line)
+    line = read_line()
+    print('ignoring line \'{}\''.format(line))
 
 
 def parse(line):
@@ -35,12 +35,21 @@ def parse(line):
     return int(groupdict['key']), int(groupdict['value'])
 
 
-def readlines():
+def read_and_parse_lines():
     return [parse(line[:-1]) for line in input_file.readlines()]
 
 
 def read_int_lines():
     return [int(x[:-1]) for x in input_file.readlines()]
+
+
+def read_lines_while_not_empty():
+    line = read_line()
+    x = []
+    while line:
+        x.append(line)
+        line = read_line()
+    return x
 
 
 def solve(lines):
@@ -62,8 +71,6 @@ test([
     ...
 ])
 
-lines = readlines()
+lines = read_lines()
 solve(lines)
-print()
-for line in lines:
-    print(line)
+print_list(lines, 'Input')
