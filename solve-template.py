@@ -59,7 +59,7 @@ def solve(lines):
 
 def test(test_cases):
     for line, expected in test_cases:
-        result = solve(line.replace(' ', ''))
+        result = solve(line)
         if result == expected:
             print('{} --> OK'.format(line))
         else:
