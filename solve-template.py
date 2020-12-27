@@ -6,7 +6,7 @@ input_file = open('input.txt')
 
 
 def print_title(title):
-    print('{}:'.format(title) if title else '')
+    print(f'{title}:' if title else '')
 
 
 def print_list(l, title=''):
@@ -18,7 +18,7 @@ def print_list(l, title=''):
 def print_dict(d, title=''):
     print_title(title)
     for key, value in d.items():
-        print('{}: {}'.format(key, value))
+        print(f'{key}: {value}')
 
 
 def read_line():
@@ -27,7 +27,7 @@ def read_line():
 
 def ignore_line():
     line = read_line()
-    print('ignoring line \'{}\''.format(line))
+    print(f'ignoring line \'{line}\'')
 
 
 def parse(line):
@@ -61,9 +61,9 @@ def test(test_cases):
     for line, expected in test_cases:
         result = solve(line)
         if result == expected:
-            print('{} --> OK'.format(line))
+            print(f'{line} --> OK')
         else:
-            raise AssertionError('Expected: {}. Found: {}'.format(expected, result))
+            raise AssertionError(f'Expected: {expected}. Found: {result}')
     print('All tests passed!')
 
 
