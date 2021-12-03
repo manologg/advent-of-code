@@ -1,8 +1,28 @@
 #!/usr/bin/python
 # coding=utf-8
+import cProfile
+import io
 import re
+from pstats import SortKey, Stats
 
 input_file = open('input.txt')
+
+
+def run_with_profiling(func, *args, **kwargs):
+    profile = cProfile.Profile()
+    profile.enable()
+
+    # run the code
+    result = func(*args, **kwargs)
+
+    profile.disable()
+    stream = io.StringIO()
+    sort_by = SortKey.CUMULATIVE
+    stats = Stats(profile, stream=stream).sort_stats(sort_by)
+    stats.print_stats()
+    print(stream.getvalue())
+
+    return result
 
 
 def print_title(title):
@@ -65,6 +85,7 @@ def test(test_cases):
         else:
             raise AssertionError(f'Expected: {expected}. Found: {result}')
     print('All tests passed!')
+    print()
 
 
 test([
