@@ -25,7 +25,7 @@ def run_with_profiling(func, *args, **kwargs):
     return result
 
 
-def print_title(title):
+def print_title(title=''):
     print(f'{title}:' if title else '')
 
 
@@ -39,6 +39,10 @@ def print_dict(d, title=''):
     print_title(title)
     for key, value in d.items():
         print(f'{key}: {value}')
+
+
+def print_simple_list(l, title):
+    print(f'{title}: {",".join([str(x) for x in l])}')
 
 
 def read_line():
@@ -57,6 +61,10 @@ def parse(line):
 
 def read_and_parse_lines():
     return [parse(line[:-1]) for line in input_file.readlines()]
+
+
+def read_comma_separated_int_line():
+    return [int(x) for x in read_line().split(',')]
 
 
 def read_int_lines():
@@ -93,5 +101,5 @@ test([
 ])
 
 lines = read_lines()
-solve(lines)
 print_list(lines, 'Input')
+solve(lines)
