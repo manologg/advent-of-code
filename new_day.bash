@@ -7,7 +7,7 @@ if [[ -z ${amount_of_folders} ]]
 then
     new_folder="01"
 else
-    last_folder=$(ls -1 | tail -1 | cut -d '_' -f 1)
+    last_folder=$(ls -1 | tail -1 | cut -d '_' -f 1 | sed 's/^0//')
     let new_folder=last_folder+1
     new_folder=$(printf "%02d" ${new_folder})
 fi
