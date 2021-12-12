@@ -41,6 +41,12 @@ def print_dict(d, title=''):
         print(f'{key}: {value}')
 
 
+def print_map(m, title=''):
+    print_title(title)
+    for line in m:
+        print(' '.join([str(x) for x in line]))
+
+
 def print_simple_list(l, title):
     print(f'{title}: {",".join([str(x) for x in l])}')
 

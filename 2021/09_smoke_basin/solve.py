@@ -14,10 +14,6 @@ def print_list(l, title=''):
         print(x)
 
 
-def print_simple_list(l, title):
-    print(f'{title}: {",".join([str(x) for x in l])}')
-
-
 def read_lines():
     return [[int(x) for x in line[:-1]] for line in input_file.readlines()]
 
