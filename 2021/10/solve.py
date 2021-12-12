@@ -1,28 +1,7 @@
 #!/usr/bin/python
 # coding=utf-8
-import cProfile
-import io
-import re
-from pstats import SortKey, Stats
 
 input_file = open('input.txt')
-
-
-def run_with_profiling(func, *args, **kwargs):
-    profile = cProfile.Profile()
-    profile.enable()
-
-    # run the code
-    result = func(*args, **kwargs)
-
-    profile.disable()
-    stream = io.StringIO()
-    sort_by = SortKey.CUMULATIVE
-    stats = Stats(profile, stream=stream).sort_stats(sort_by)
-    stats.print_stats()
-    print(stream.getvalue())
-
-    return result
 
 
 def print_title(title=''):
@@ -35,71 +14,57 @@ def print_list(l, title=''):
         print(x)
 
 
-def print_dict(d, title=''):
-    print_title(title)
-    for key, value in d.items():
-        print(f'{key}: {value}')
+def read_lines():
+    return [x[:-1] for x in input_file.readlines()]
 
 
-def print_simple_list(l, title):
-    print(f'{title}: {",".join([str(x) for x in l])}')
+POINTS = {
+    ')': 3,
+    ']': 57,
+    '}': 1197,
+    '>': 25137,
+}
+
+END_OF = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '<': '>',
+}
 
 
-def read_line():
-    return input_file.readline()[:-1]
+def check(chunk):
+    first = chunk[0]
+    chunk = chunk[1:]
 
+    while chunk[0] in END_OF.keys():
+        chunk = check(chunk)
+    
+    next = chunk[0]
+    if next != END_OF[first]:
+        print(f'Expected {END_OF[first]}, but found {next} instead')
+        raise ValueError(next)
 
-def ignore_line():
-    line = read_line()
-    print(f'ignoring line \'{line}\'')
-
-
-def parse(line):
-    groupdict = re.match(r'^(?P<key>\w+): (?P<value>\w+)$', line).groupdict()
-    return int(groupdict['key']), int(groupdict['value'])
-
-
-def read_and_parse_lines():
-    return [parse(line[:-1]) for line in input_file.readlines()]
-
-
-def read_comma_separated_int_line():
-    return [int(x) for x in read_line().split(',')]
-
-
-def read_int_lines():
-    return [int(x[:-1]) for x in input_file.readlines()]
-
-
-def read_lines_while_not_empty():
-    line = read_line()
-    x = []
-    while line:
-        x.append(line)
-        line = read_line()
-    return x
+    return chunk[1:]
 
 
 def solve(lines):
-    # solve the problem
-    return True
+    points = 0
+    for i, line in enumerate(lines):
+        print(line)
+        try:
+            check(line)
+            print(f'0 points for line {i} (ok)')
+        except ValueError as e:
+            print(f'{POINTS[e.args[0]]} points for line {i}')
+            points += POINTS[e.args[0]]
+        except IndexError:
+            print(f'0 points for line {i} (incomplete line)')
 
+        print()
+    return points
 
-def test(test_cases):
-    for line, expected in test_cases:
-        result = solve(line)
-        if result == expected:
-            print(f'{line} --> OK')
-        else:
-            raise AssertionError(f'Expected: {expected}. Found: {result}')
-    print('All tests passed!')
-    print()
-
-
-test([
-    ...
-])
 
 lines = read_lines()
-print_list(lines, 'Input')
-solve(lines)
+points = solve(lines)
+print(f'Total syntax error score: {points}')
