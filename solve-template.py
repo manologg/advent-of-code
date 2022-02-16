@@ -43,9 +43,9 @@ def print_dict(d, title=''):
     print()
 
 
-def print_map(m, title=''):
+def print_grid(grid, title=''):
     print_title(title)
-    for line in m:
+    for line in grid:
         print(' '.join([str(x) for x in line]))
     print()
 
