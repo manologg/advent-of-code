@@ -81,25 +81,27 @@ def read_comma_separated_int_line():
 
 
 def read_comma_separated_line():
-    return read_line().split(',')
+    return [range.split('-') for range in read_line().split(',')]
 
 
 def read_int_lines():
     return [int(x[:-1]) for x in input_file.readlines()]
 
 
-def read_lines_while_not_empty():
-    line = read_line()
-    x = []
-    while line:
-        x.append(line)
-        line = read_line()
-    return x
+def invalid_ids(ids_range):
+    for i in range(int(ids_range[0]), int(ids_range[1]) + 1):
+        s = str(i)
+        l = len(s)
+        middle = l // 2
+        if l % 2 == 0 and s[:middle] == s[middle:]:
+            yield i
 
 
-def solve(lines):
-    # solve the problem
-    return 0
+def solve(ids_list):
+    all_invalid_ids = []
+    for ids_range in ids_list:
+        all_invalid_ids.extend(invalid_ids(ids_range))
+    return sum(all_invalid_ids)
 
 
 def test(test_cases):
@@ -114,10 +116,31 @@ def test(test_cases):
 
 
 test([
-    (['line-0', 'line-1'], 0)
+    (
+        [
+            ['11', '22'],
+        ],
+        33
+    ),
+    (
+        [
+            ['11', '22'],
+            ['95', '115'],
+            ['998', '1012'],
+            ['1188511880', '1188511890'],
+            ['222220', '222224'],
+            ['1698522', '1698528'],
+            ['446443', '446449'],
+            ['38593856', '38593862'],
+            ['565653', '565659'],
+            ['824824821', '824824827'],
+            ['2121212118', '2121212124'],
+        ],
+        1227775554
+    ),
 ])
 
-lines = read_lines_while_not_empty()
-print_list(lines, 'Input')
-result = solve(lines)
+line = read_comma_separated_line()
+print_list(line, 'Input')
+result = solve(line)
 print_solution(result)
