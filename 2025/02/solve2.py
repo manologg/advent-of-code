@@ -3,6 +3,7 @@
 import cProfile
 import io
 import re
+from operator import truediv
 from pstats import SortKey, Stats
 
 input_file = open('input.txt')
@@ -88,17 +89,18 @@ def read_int_lines():
     return [int(x[:-1]) for x in input_file.readlines()]
 
 
-def invalid(i):
-    s = str(i)
-    l = len(s)
-    middle = l // 2
-    return l % 2 == 0 and s[:middle] == s[middle:]
+def invalid(id_as_int):
+    s = str(id_as_int)
+    for i in range(len(s) // 2):
+        if re.fullmatch(f'({s[:i+1]})+', s):
+            return True
+    return False
 
 
 def invalid_ids(ids_range):
-    for i in range(int(ids_range[0]), int(ids_range[1]) + 1):
-        if invalid(i):
-            yield i
+    for id_as_int in range(int(ids_range[0]), int(ids_range[1]) + 1):
+        if invalid(id_as_int):
+            yield id_as_int
 
 
 def solve(ids_list):
