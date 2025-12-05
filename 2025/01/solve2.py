@@ -106,14 +106,22 @@ def solve(lines):
             new_dial = dial - amount
 
         dial = new_dial % 100
-        if dial == 0:
-            pointing_0 += 1
 
-        if dial != new_dial and dial != 0 and old_dial != 0:
+        if dial != new_dial:
+            diff = abs(new_dial // 100)
+            pointing_0 += diff
+            # print(f'The dial is rotated {line} to point at {dial}; during this rotation, it points at zero {diff} times.')
+        # else:
+        #     print(f'The dial is rotated {line} to point at {dial}.')
+
+        if dial == 0 and direction == 'L':
             pointing_0 += 1
-            print(f'The dial is rotated {line} to point at {dial}; during this rotation, it points at 0 once.')
-        else:
-            print(f'The dial is rotated {line} to point at {dial}.')
+            # print(f'Count one more because we ended at zero')
+        if old_dial == 0 and direction == 'L':
+            pointing_0 -= 1
+            # print(f'Count one less because we started at zero and went left')
+
+        # print()
 
     return pointing_0
 
@@ -130,8 +138,15 @@ def test(test_cases):
 
 
 test([
-    (['L50', 'R1', 'L2'], 2)
+    (['L150'], 2),
+    (['L50'], 1),
+    (['L50', 'R1', 'L2'], 2),
+    (['L68', 'L30', 'R48', 'L5', 'R60', 'L55', 'L1', 'L99', 'R14', 'L82'], 6),
+    (['L68', 'L30', 'R48', 'L5', 'R60', 'L155', 'L1', 'L99', 'R14', 'L82'], 7),
 ])
+
+# 2359 is too low
+# 8101 is too high
 
 lines = read_lines_while_not_empty()
 print_list(lines, 'Input')
